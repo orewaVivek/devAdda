@@ -15,18 +15,14 @@ const userAuth = async (req, res, next) => {
   try {
     const { token } = req.cookies;
     if (!token) throw new Error("Login first");
-    console.log(token);
     const decodedMsg = jwt.verify(token, "ThisIsSecret");
-    console.log("decoded msg : ",decodedMsg);
     const { _id } = decodedMsg;
-    console.log("user id  : ", _id);
     const user = await User.findById(_id);
-    console.log("user : ", user);
     if (!user) throw new Error("user does't exist");
     req.user = user;
     next();
   } catch (err) {
-    res.status(400).send("Error : ", err.message);
+    res.status(400).send("Error : " + err.message);
   }
 };
 

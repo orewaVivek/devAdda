@@ -20,7 +20,7 @@ authRouter.post("/signup", async (req, res) => {
       emailId,
       password: passwordHash,
     };
-    const user = User(userObj);
+    const user = new User(userObj);
     await user.save();
     res.send("User added successfully");
   } catch (err) {
@@ -52,7 +52,7 @@ authRouter.post("/login", async (req, res) => {
 });
 
 authRouter.post("/logout", (req, res) => {
-  res.clearCookie;
+  res.cookie("token", null, { expires: new Date(Date.now()) });
   res.send("Logged out successfully");
 });
 

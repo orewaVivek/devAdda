@@ -13,17 +13,34 @@ const validateSignUpData = (req) => {
   }
 };
 
-const validateLogin = (req)=>{
-  const {emailId , password } = req.body;
+const validateLogin = (req) => {
+  const { emailId, password } = req.body;
 
-  if(!emailId || !password){
+  if (!emailId || !password) {
     throw new Error("Missing credentials");
-  }else if(!validator.isEmail(emailId)){
+  } else if (!validator.isEmail(emailId)) {
     throw new Error("Invalid email id");
   }
-}
+};
+
+const validateProfileEditData = (req) => {
+  const allowedEditFields = [
+    "firstName",
+    "lastName",
+    "age",
+    "gender",
+    "about",
+    "skills",
+  ];
+  const isEditAllowed = Object.keys(req.body).every((field) =>
+    allowedEditFields.includes(field)
+  );
+
+  return isEditAllowed;
+};
 
 module.exports = {
   validateSignUpData,
-  validateLogin
+  validateLogin,
+  validateProfileEditData,
 };
