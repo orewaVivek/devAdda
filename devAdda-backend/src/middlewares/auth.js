@@ -14,15 +14,18 @@ const adminAuth = (req, res, next) => {
 const userAuth = async (req, res, next) => {
   try {
     const { token } = req.cookies;
-    if (!token) throw new Error("Login first");
+    if (!token) return res.status(401).send("Please Log In");
+
     const decodedMsg = jwt.verify(token, "ThisIsSecret");
     const { _id } = decodedMsg;
     const user = await User.findById(_id);
-    if (!user) throw new Error("user does't exist");
+
+    if (!user) return res.status(401).send("User does not exist");
+
     req.user = user;
     next();
   } catch (err) {
-    res.status(400).send("Error : " + err.message);
+    return res.status(401).send("Unauthorized: " + err.message);
   }
 };
 

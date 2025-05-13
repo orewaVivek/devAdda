@@ -98,7 +98,7 @@ userRouter.get("/user/feed", userAuth, async (req, res) => {
     let limit = req.query.limit || 10;
     if (limit > 50) limit = 50;
     const allUsers = await User.find({ _id: { $nin: data } })
-      .select("firstName lastName age about skills")
+      .select("firstName lastName age about skills photoURL")
       .skip((page - 1) * limit)
       .limit(limit);
 

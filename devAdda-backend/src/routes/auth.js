@@ -22,7 +22,7 @@ authRouter.post("/signup", async (req, res) => {
     };
     const user = new User(userObj);
     await user.save();
-    res.send("User added successfully");
+    res.json({ data: user });
   } catch (err) {
     res.status(400).send("Error!! :" + err.message);
   }
@@ -33,21 +33,29 @@ authRouter.post("/login", async (req, res) => {
     validateLogin(req);
     const { emailId, password } = req.body;
     const user = await User.findOne({ emailId: emailId });
-    if (!user) throw new Error("This email is not registered, Sign up first !");
+
+    if (!user) {
+      // If the email is not found, send a specific message for that
+      return res
+        .status(400)
+        .send({ message: "This email is not registered. Sign up first!" });
+    }
 
     const loginSuccess = await user.validatePassword(password);
 
     if (loginSuccess) {
-      //creating jwt token
+      // Creating JWT token
       const token = await user.getJWT();
-      //Storing token in cookie and sending it to user
+      // Storing token in cookie and sending it to the user
       res.cookie("token", token);
-      res.status(200).send("Login Successful");
+      return res.status(200).json({ data: user });
     } else {
-      throw new Error("Incorrect Credentials");
+      // Incorrect password
+      return res.status(400).send({ message: "Invalid credentials" });
     }
   } catch (err) {
-    res.status(400).send("Error - " + err.message);
+    // General error handling
+    res.status(400).send({ message: "Error - " + err.message });
   }
 });
 
