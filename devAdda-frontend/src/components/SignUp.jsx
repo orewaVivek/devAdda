@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { BASE_URL } from "../utils/constants";
 import { addUser } from "../utils/userSlice";
 
@@ -28,8 +28,8 @@ function SignUp() {
         { withCredentials: true }
       );
       dispatch(addUser(res.data.data));
-      console.log("Login successful");
-      navigate("/");
+      console.log("Sign Up successful");
+      navigate("/profile");
       // console.log(res.data.data);
     } catch (err) {
       console.log("Error :", err.message);
@@ -91,6 +91,12 @@ function SignUp() {
             <button className="btn btn-primary w-full mt-4">Sign Up</button>
           </div>
         </form>
+        <p className="text-center mt-4">
+          Old User ? Wanna Login ?🤔 &nbsp;👉 &nbsp;
+          <Link to="/login" className="text-blue-400 font-bold">
+            Log In
+          </Link>
+        </p>
       </div>
     </div>
   );

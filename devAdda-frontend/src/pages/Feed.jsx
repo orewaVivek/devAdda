@@ -4,18 +4,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
 import { useEffect } from "react";
 import UserCard from "../components/UserCard";
+import { useNavigate } from "react-router";
 
 function Feed() {
+  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
+
   const dispatch = useDispatch();
-  const feed = useSelector((store) => store.feed);
-  console.log(feed);
+  const feed = useSelector((store) => store.feed) || []; // Fallback to an empty array
+
   const getFeed = async () => {
     try {
-      if (feed) return;
+      if (feed.length > 0) return; // ✅ only fetch if empty
       const res = await axios.get(BASE_URL + "/user/feed", {
         withCredentials: true,
       });
-
       dispatch(addFeed(res.data));
     } catch (err) {
       console.log("Error: " + err.message);
@@ -24,11 +33,16 @@ function Feed() {
 
   useEffect(() => {
     getFeed();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="flex justify-center my-12">
-      {feed && feed.map((feed) => <UserCard key={feed._id} user={feed} />)}
+      {feed.length > 0 ? (
+        <UserCard key={feed[0]._id} user={feed[0]} />
+      ) : (
+        <p className="text-2xl font-bold">No New Users Found !</p>
+      )}
     </div>
   );
 }

@@ -47,7 +47,7 @@ function AddSkills({ skill, setSkill, skillSet, setSkillSet, editMode }) {
       <div className="flex mx-20">
         <input
           type="text"
-          className="h-10 w-70 bg-base-100 text-xs border p-2 rounded-md"
+          className="h-10 w-100 bg-base-100 text-xs border p-2 rounded-md"
           placeholder="Add a Skill.."
           value={skill}
           onChange={(e) => setSkill(e.target.value)}

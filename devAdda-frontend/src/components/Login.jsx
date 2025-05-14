@@ -29,8 +29,8 @@ function Login() {
         },
         { withCredentials: true }
       );
-
       dispatch(addUser(res.data.data));
+      console.log("reaching navigation code");
       navigate("/");
     } catch (err) {
       if (err.response && err.response.data) {
@@ -79,7 +79,7 @@ function Login() {
           </div>
         </form>
         <div className="mt-5 flex justify-around ml-15 mr-15">
-          <p>New User ? - </p>
+          <p>New User ? &nbsp; 👉</p>
           <Link
             to="/signup"
             className="text-blue-300 hover:text-blue-500 transition"

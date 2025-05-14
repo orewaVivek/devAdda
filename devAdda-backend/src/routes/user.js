@@ -18,6 +18,8 @@ userRouter.get("/user/requests/recieved", userAuth, async function (req, res) {
       "age",
       "about",
       "skills",
+      "photoURL",
+      "gender",
     ]);
     // const requestingUsers = [];
     // for (const request of requests) {
@@ -51,8 +53,14 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
         { senderId: currUserId, status: "accepted" },
       ],
     })
-      .populate("senderId", "firstName lastName age about skills")
-      .populate("recieverId", "firstName lastName age about skills");
+      .populate(
+        "senderId",
+        "firstName lastName age about skills gender photoURL"
+      )
+      .populate(
+        "recieverId",
+        "firstName lastName age about skills gender photoURL"
+      );
 
     const data = connections.map((row) => {
       if (row.senderId._id.toString() === currUserId.toString()) {

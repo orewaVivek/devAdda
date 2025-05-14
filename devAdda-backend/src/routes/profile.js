@@ -20,7 +20,20 @@ profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
     const user = req.user;
     Object.keys(req.body).forEach((key) => (user[key] = req.body[key]));
     await user.save();
-    res.send("User Details Updated successfully !!");
+    res.send(user);
+  } catch (err) {
+    res.status(400).send("Error : " + err.message);
+  }
+});
+
+profileRouter.get("/getProfile/:userId", userAuth, async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    const data = await User.findById(userId);
+    if (!data) throw new Error("User doesn't exist");
+    else {
+      res.send({ data: data });
+    }
   } catch (err) {
     res.status(400).send("Error : " + err.message);
   }
