@@ -1,16 +1,28 @@
 import axios from "axios";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { Link, useNavigate } from "react-router";
 import { BASE_URL } from "../utils/constants";
 
 function Login() {
+  const user = useSelector((store) => store.user);
+  const navigate = useNavigate();
+  useEffect(
+    function () {
+      if (user !== null) navigate("/");
+    },
+    [user]
+  );
+
   const [emailId, setEmailId] = useState("vivekdesai1215@gmail.com");
   const [password, setPassword] = useState("itsMyPassword@1205");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
+  if (user !== null) {
+    return null;
+  }
 
   const handleNewEmailId = (e) => {
     setEmailId(e.target.value);

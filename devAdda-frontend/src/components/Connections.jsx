@@ -11,7 +11,6 @@ function Connections() {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-
   const connections = useSelector((store) => store.connections);
   console.log("connecctionreducer data : ", connections);
   const dispatch = useDispatch();
@@ -55,7 +54,7 @@ function ConnectionCard({ connection }) {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-base-300 h-30 w-160 rounded-md ">
+    <div className="bg-base-300 h-30 w-160 rounded-md border-t-[0.5px] border-b-[0.5px]">
       <div className="flex justify-between ">
         <div className="flex gap-4">
           <img
