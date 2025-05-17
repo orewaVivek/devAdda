@@ -13,9 +13,10 @@ import Feed from "./pages/Feed";
 import SignUp from "./components/SignUp";
 import Requests from "./components/Requests";
 import UserProfile from "./components/UserProfile";
-import Welcome from "./pages/welcome";
+// import Welcome from "./pages/Welcome";
 import RequireWelcomeRedirect from "./components/RequireWelcomeRedirect";
 import { useEffect } from "react";
+import Welcome from "./pages/Welcome";
 
 function App() {
   const user = useSelector((store) => store.user);
