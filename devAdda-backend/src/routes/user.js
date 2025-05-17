@@ -32,7 +32,7 @@ userRouter.get("/user/requests/recieved", userAuth, async function (req, res) {
     //   delete user.updatedAt;
     //   delete user.__v;
     // }
-    console.log(requests);
+   
 
     res.json({
       message: "All the recieved connection requests are :",

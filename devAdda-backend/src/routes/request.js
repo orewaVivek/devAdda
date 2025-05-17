@@ -89,7 +89,7 @@ requestRouter.post(
       if (status === "accepted") {
         requestExists.status = "accepted";
         await requestExists.save();
-        console.log("request is being accepted");
+       
         res.json({
           message: "The Connection request was accepted successfully",
           connection_request: requestExists,
