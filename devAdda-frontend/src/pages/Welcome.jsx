@@ -87,7 +87,7 @@ function Welcome() {
           }
         `}
       </style>
-      <WelcomeContent />
+      {!showText && <WelcomeContent />}
     </div>
   );
 }
