@@ -59,9 +59,22 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <NavBar />
-      <div className="flex-grow">
-        <Outlet />
+      <div className="relative min-h-screen flex-grow">
+        {/* Background image with reduced opacity */}
+        <div
+          className="absolute inset-0  bg-contain  opacity-20 z-0"
+          style={{
+            backgroundImage: "url('public/bg-08.jpg')", // Make sure it's correctly served
+          }}
+        ></div>
+
+        {/* Foreground content */}
+        <div className="relative z-10">
+          <NavBar />
+          <div className="flex-grow">
+            <Outlet />
+          </div>
+        </div>
       </div>
       {/* <Footer /> */}
     </div>

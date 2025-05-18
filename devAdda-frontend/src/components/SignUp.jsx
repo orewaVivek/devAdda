@@ -6,10 +6,10 @@ import { BASE_URL } from "../utils/constants";
 import { addUser } from "../utils/userSlice";
 
 function SignUp() {
-  const [emailId, setEmailId] = useState("vivekdesai1205@gmail.com");
-  const [password, setPassword] = useState("itsMyPassword@1215");
-  const [firstName, setFirstName] = useState("Vivek");
-  const [lastName, setLastName] = useState("Desai02");
+  const [emailId, setEmailId] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState("");
@@ -35,11 +35,14 @@ function SignUp() {
     } catch (err) {
       console.log("Error:", err);
       if (err.response) {
-        // Log the full error response object
         console.log("Error Response:", err.response);
 
-        if (err.response.data && err.response.data.message) {
-          setError(err.response.data.message); // Set the error message to UI
+        const errorData = err.response.data;
+
+        if (typeof errorData === "string") {
+          setError(errorData); // ✅ display raw string message
+        } else if (errorData.message) {
+          setError(errorData.message); // JSON-style error
         } else {
           setError("Something went wrong. Please try again.");
         }
@@ -51,7 +54,7 @@ function SignUp() {
 
   return (
     <div className="flex justify-center my-10 ">
-      <div className="bg-base-300 p-10 rounded  shadow-xl w-130">
+      <div className="bg-base-300 p-10 rounded  shadow-xl w-130 border-[2px]">
         <h1 className="text-2xl font-bold text-center pb-6">Sign Up</h1>
         <form className="grid gap-6" onSubmit={handleSignUpSubmit}>
           <div className="flex flex-col gap-2 ">

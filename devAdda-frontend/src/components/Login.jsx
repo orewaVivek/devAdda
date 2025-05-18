@@ -15,8 +15,8 @@ function Login() {
     [user]
   );
 
-  const [emailId, setEmailId] = useState("vivekdesai1215@gmail.com");
-  const [password, setPassword] = useState("itsMyPassword@1205");
+  const [emailId, setEmailId] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
 
@@ -59,7 +59,7 @@ function Login() {
 
   return (
     <div className="flex justify-center my-10">
-      <div className="bg-base-300 p-10 rounded w-96 shadow-xl">
+      <div className="bg-base-300 p-10 rounded w-96 shadow-xl border-[2px]">
         <h1 className="text-2xl font-bold text-center pb-6">Login</h1>
         <form className="grid gap-6" onSubmit={handleLoginSubmit}>
           <div className="flex flex-col gap-2">
