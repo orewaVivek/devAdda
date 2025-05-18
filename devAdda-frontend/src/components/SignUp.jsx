@@ -24,20 +24,6 @@ function SignUp() {
     e.preventDefault();
     setError(""); // clear any previous error
 
-    if (!emailId.includes("@")) {
-      setError("Invalid email address");
-      return;
-    }
-    if (
-      password.length < 8 ||
-      !/[A-Z]/.test(password) ||
-      !/\d/.test(password)
-    ) {
-      setError(
-        "Password must be at least 8 characters, include a number and an uppercase letter"
-      );
-      return;
-    }
     try {
       const res = await axios.post(
         BASE_URL + "/signup",
@@ -48,10 +34,17 @@ function SignUp() {
       navigate("/profile");
     } catch (err) {
       console.log("Error:", err);
-      if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message);
+      if (err.response) {
+        // Log the full error response object
+        console.log("Error Response:", err.response);
+
+        if (err.response.data && err.response.data.message) {
+          setError(err.response.data.message); // Set the error message to UI
+        } else {
+          setError("Something went wrong. Please try again.");
+        }
       } else {
-        setError("Something went wrong. Please try again.");
+        setError("Network error or no response from server.");
       }
     }
   };
