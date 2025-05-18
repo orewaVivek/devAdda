@@ -33,7 +33,7 @@ authRouter.post("/signup", async (req, res) => {
 
     res.json({ data: savedUser });
   } catch (err) {
-    res.status(400).send("Error!! :" + err.message);
+    res.status(400).json({ message: err.message });
   }
 });
 

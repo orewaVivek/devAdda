@@ -12,6 +12,7 @@ function SignUp() {
   const [lastName, setLastName] = useState("Desai02");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   const handleNewEmailId = (e) => {
     setEmailId(e.target.value);
@@ -21,18 +22,37 @@ function SignUp() {
   };
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
+    setError(""); // clear any previous error
+
+    if (!emailId.includes("@")) {
+      setError("Invalid email address");
+      return;
+    }
+    if (
+      password.length < 8 ||
+      !/[A-Z]/.test(password) ||
+      !/\d/.test(password)
+    ) {
+      setError(
+        "Password must be at least 8 characters, include a number and an uppercase letter"
+      );
+      return;
+    }
     try {
       const res = await axios.post(
         BASE_URL + "/signup",
-        { firstName: firstName, lastName: lastName, emailId, password },
+        { firstName, lastName, emailId, password },
         { withCredentials: true }
       );
       dispatch(addUser(res.data.data));
-      console.log("Sign Up successful");
       navigate("/profile");
-      // console.log(res.data.data);
     } catch (err) {
-      console.log("Error :", err.message);
+      console.log("Error:", err);
+      if (err.response && err.response.data && err.response.data.message) {
+        setError(err.response.data.message);
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
     }
   };
 
@@ -86,7 +106,9 @@ function SignUp() {
               onChange={handleNewPassoword}
             />
           </div>
-
+          {error && (
+            <div className="text-red-500 text-sm text-center mb-4">{error}</div>
+          )}
           <div className="flex justify-center">
             <button className="btn btn-primary w-full mt-4">Sign Up</button>
           </div>
