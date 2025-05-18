@@ -35,11 +35,14 @@ function SignUp() {
     } catch (err) {
       console.log("Error:", err);
       if (err.response) {
-        // Log the full error response object
         console.log("Error Response:", err.response);
 
-        if (err.response.data && err.response.data.message) {
-          setError(err.response.data.message); // Set the error message to UI
+        const errorData = err.response.data;
+
+        if (typeof errorData === "string") {
+          setError(errorData); // ✅ display raw string message
+        } else if (errorData.message) {
+          setError(errorData.message); // JSON-style error
         } else {
           setError("Something went wrong. Please try again.");
         }
