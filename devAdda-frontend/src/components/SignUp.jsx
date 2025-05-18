@@ -103,10 +103,10 @@ function SignUp() {
             />
           </div>
           {error && (
-            <div className="text-red-500 text-sm text-center mb-4">{error}</div>
+            <div className="text-red-500 text-sm text-center mb-3">{error}</div>
           )}
           <div className="flex justify-center">
-            <button className="btn btn-primary w-full mt-4">Sign Up</button>
+            <button className="btn btn-primary w-full mt-3">Sign Up</button>
           </div>
         </form>
         <p className="text-center mt-4">
