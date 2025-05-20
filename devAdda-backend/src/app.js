@@ -16,7 +16,8 @@ connectDB()
     });
   })
   .catch((err) => {
-    console.log("Database cannot be connected");
+    console.error("Database cannot be connected:", err.message);
+    process.exit(1); // exit with error code so PM2 knows something failed
   });
 
 app.use(
