@@ -13,7 +13,7 @@ const userRouter = require("./routes/user");
 connectDB()
   .then(() => {
     console.log("Database connection established");
-    app.listen(3000, () => {
+    app.listen(3000,'0.0.0.0' ,() => {
       console.log("Server is up and running on port 3000...");
     });
   })
